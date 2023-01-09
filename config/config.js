@@ -1,4 +1,7 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 
-mongoose.connect('mongodb://localhost:27017/projecttwo',()=>{console.log('connect to mondodb');})
+mongoose.connect(
+ "mongodb+srv://movie123:movie123@cluster0.hpo5ib6.mongodb.net/?retryWrites=true&w=majority",
+  { useNewUrlParser: true, useUnifiedTopology: true } , mongoose.set('strictQuery', false)).then(()=>console.log('connected'))
+  .catch(e=>console.log(e));

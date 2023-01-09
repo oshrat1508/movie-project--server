@@ -1,5 +1,5 @@
 const tv_DAL = require('../DAL/tvDAL')
-const { all } = require('../router/router')
+const { all } = require('../router/movieRouter')
 
 const get_all_tv = async() =>{
     let allTv = []
