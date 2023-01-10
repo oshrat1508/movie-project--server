@@ -12,7 +12,6 @@ let top_rate_movie =await get_movie.get_top_rate()
 let map_top_rate = top_rate_movie.map(movie => allMovies.push(movie))
 let upcoming_movie =await get_movie.get_upcoming()
 let map_upcoming = upcoming_movie.map(movie => allMovies.push(movie))
-// console.log(allMovies.length);
 
 const uniqueIds = [];
 

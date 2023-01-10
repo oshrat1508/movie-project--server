@@ -11,8 +11,8 @@ router.get("/user/:id", controllers.getUserById());
 router.put("/user/:id", controllers.updateUser());
 router.delete("/user/:id", controllers.deleteUser());
 router.get("/user", controllers.getAllUsers());
-
 router.post("/facebooklogin", controllers.facebooklogin());
 router.post("/googlelogin", controllers.googlelogin());
+router.put('/:id/like',controllers.like())
 
 module.exports = router;

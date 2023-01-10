@@ -6,18 +6,12 @@ const userSchema = new mongoose.Schema({
   email: String,
   password: String,
   id: String,
+  like: {
+    type: [String],
+    default: [],
+  } ,
   profileImg: String,
-  access: String,
-  location: String,
-  birthday:String,
-  ReservedCreditCards: String,
-  saveCards: [
-    {
-      cardNumber: String,
-      cardValidity: String,
-      threeDigits: String,
-    },
-  ],
+
 });
 
 const UsersModel = mongoose.model("users", userSchema);

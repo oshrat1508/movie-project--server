@@ -2,10 +2,10 @@ const Users = require("../MODELS/userModel");
 const bcryptjs = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const axios = require("axios");
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require('google-auth-library');
 
-const client = new OAuth2Client('727555427268-u0l3487tpitph7t1s2lir4vsdk6153se.apps.googleusercontent.com')
+const client = new OAuth2Client('727555427268-tm61ueoct3tpjr6mgkicp1juhmnhtlg9.apps.googleusercontent.com')
 
 const updateUser = () => async(req, res) => {
     try {
@@ -155,7 +155,7 @@ const facebooklogin = () => async(req, res) => {
 
 const googlelogin = () => async(req, res) => {
   const { tokenId } = req.body;
-  const data = await client.verifyIdToken({ idToken: tokenId, audience: '727555427268-u0l3487tpitph7t1s2lir4vsdk6153se.apps.googleusercontent.com' })
+  const data = await client.verifyIdToken({ idToken: tokenId, audience: '727555427268-tm61ueoct3tpjr6mgkicp1juhmnhtlg9.apps.googleusercontent.com' })
   const { email_verified, email, name } = data.payload
   console.log(data);
   if (!email_verified) return res.status(400).json('not email verified !!')
@@ -205,6 +205,27 @@ const forgotPassword = () => async (req,res) =>{
       });}
 }
 
+const like = () => async (req , res) =>{
+    const {id: _id} = req.params; 
+  
+    if(!req.userId) return res.json({message:'Unauthenticated'})
+        
+    const user = await Users.findById(req.userId);
+  
+    const index = user.like.findIndex((id)=> id === String(_id))
+  
+    if(index === -1){
+      user.like.push(_id)
+    }else{
+      user.like = user.like.filter((id) => id !== String(_id))
+    }
+  
+    const updateUser = await Users.findByIdAndUpdate(_id ,user , {new:true});
+  
+    
+    res.json(updateUser)
+    }
+
 module.exports = {
     getAllUsers,
     deleteUser,
@@ -215,5 +236,6 @@ module.exports = {
     facebooklogin,
     googlelogin,
     forgotPassword,
-    singUpManager
+    singUpManager, 
+    like
 };
