@@ -8,10 +8,10 @@ router.post("/singup", controllers.singUp());
 router.post("/singupManeger", controllers.singUpManager());
 router.post("/singin", controllers.singIn());
 router.post("/forgot-password", controllers.forgotPassword());
-router.get("/user/:id", controllers.getUserById());
-router.put("/user/:id", controllers.updateUser());
-router.delete("/user/:id", controllers.deleteUser());
-router.get("/user", controllers.getAllUsers());
+router.get("/users/:id", controllers.getUserById());
+router.put("/users/:id", controllers.updateUser());
+router.delete("/users/:id", controllers.deleteUser());
+router.get("/users", controllers.getAllUsers());
 router.post("/facebooklogin", controllers.facebooklogin());
 router.post("/googlelogin", controllers.googlelogin());
 
