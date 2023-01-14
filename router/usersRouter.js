@@ -3,6 +3,7 @@ const controllers = require("../controllers/usersController");
 const router = express.Router();
 // http://localhost:8000/singup
 
+router.put("/like/:movieid",controllers.like())
 router.post("/singup", controllers.singUp());
 router.post("/singupManeger", controllers.singUpManager());
 router.post("/singin", controllers.singIn());
@@ -13,6 +14,5 @@ router.delete("/user/:id", controllers.deleteUser());
 router.get("/user", controllers.getAllUsers());
 router.post("/facebooklogin", controllers.facebooklogin());
 router.post("/googlelogin", controllers.googlelogin());
-router.put('/:id/like',controllers.like())
 
 module.exports = router;

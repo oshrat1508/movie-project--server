@@ -4,6 +4,7 @@ const nodemailer = require("nodemailer");
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require('google-auth-library');
+const mongoose= require("mongoose");
 
 const client = new OAuth2Client('727555427268-tm61ueoct3tpjr6mgkicp1juhmnhtlg9.apps.googleusercontent.com')
 
@@ -157,7 +158,7 @@ const googlelogin = () => async(req, res) => {
   const { tokenId } = req.body;
   const data = await client.verifyIdToken({ idToken: tokenId, audience: '727555427268-tm61ueoct3tpjr6mgkicp1juhmnhtlg9.apps.googleusercontent.com' })
   const { email_verified, email, name } = data.payload
-  console.log(data);
+
   if (!email_verified) return res.status(400).json('not email verified !!')
   try {
       const newUser = { name, email, password: email };
@@ -165,8 +166,8 @@ const googlelogin = () => async(req, res) => {
       if (user) {
           return res.json( user );
       } else {
-          console.log(newUser);
-          const newUserd = await Users.create({...newUser , access:'user'});
+
+        const newUserd = await Users.create({...newUser , access:'user'});
           return res.json( newUserd);
       }
   } catch (e) {
@@ -178,7 +179,7 @@ const forgotPassword = () => async (req,res) =>{
     const {email} = req.body
 
     const exsist = await Users.findOne({ email });
-      console.log(exsist);
+
     if (!exsist) return res.status(404).json("user is not exsist");
 
     else{
@@ -206,21 +207,26 @@ const forgotPassword = () => async (req,res) =>{
 }
 
 const like = () => async (req , res) =>{
-    const {id: _id} = req.params; 
-  
-    if(!req.userId) return res.json({message:'Unauthenticated'})
-        
-    const user = await Users.findById(req.userId);
-  
+    const {movieid: _id} = req.params; 
+   
+
+   console.log(req.body); 
+
+    if(!req.body._id) return res.json({message:'Unauthenticated'})
+    
+    const user = await Users.findById(req.body._id);
+
     const index = user.like.findIndex((id)=> id === String(_id))
   
     if(index === -1){
-      user.like.push(_id)
-    }else{
-      user.like = user.like.filter((id) => id !== String(_id))
+      user.like.push(String(_id))
+    }
+    else{
+        user.like = user.like.filter((id) => id !== String(_id))
+    
     }
   
-    const updateUser = await Users.findByIdAndUpdate(_id ,user , {new:true});
+    const updateUser = await Users.findByIdAndUpdate(user._id ,user , {new:true});
   
     
     res.json(updateUser)

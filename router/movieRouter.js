@@ -11,8 +11,9 @@ router.get('/movie', async(req,res )=>{
       catch(e){
      res.status(500).json(e)
       }
-  
+
 })
+
 
 router.get('/tv', async(req,res )=>{
     try{
